@@ -10,7 +10,8 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 * **Cloud Control Plane:** Microsoft Entra ID sync with P2 licensing enforcing Conditional Access and TAP.
 * **Testing:** Dedicated lab "partner" and "associate" accounts used to validate location-based policies, RBAC, and MFA recovery.
 
-**[Architecture overview]**<img width="808" height="377" alt="Screenshot 2026-03-05 171029" src="https://github.com/user-attachments/assets/3dd82b91-39fe-4fe4-9464-75bf5310a3e3" />
+**Architecture overview**
+<img width="808" height="377" alt="Screenshot 2026-03-05 171029" src="https://github.com/user-attachments/assets/3dd82b91-39fe-4fe4-9464-75bf5310a3e3" />
 
 
 
@@ -21,10 +22,12 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 
 ### Execution & Validation
 1. Created an AD security group `M&A_Associates` under the Departments OU to represent the specific legal role.
+
 **Create M&A role group**<img width="422" height="335" alt="creating_group-3" src="https://github.com/user-attachments/assets/0e10bc01-3177-4625-ac97-5103e4032f58" />
 
 
 3. Onboarded **Emma Williams** into the `Mergers & Acquisitions` OU and added her to the `M&A_Associates` group, ensuring access is driven dynamically by role, not individual user assignment.
+
 **Emma in M&A OU**
 <img width="643" height="109" alt="M A-joiner-1" src="https://github.com/user-attachments/assets/2cdd44de-e511-4464-8ad9-a6aeb3e0b3fb" />
 
@@ -33,6 +36,7 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 
 
 3. Validated the joiner experience by signing in as Emma and creating a deal folder (`E_williams_london_notes`) in the M&A share, proving she can work exclusively within her practice group's perimeter.
+
 **Emma signs in**
 <img width="443" height="480" alt="willinams_login-5" src="https://github.com/user-attachments/assets/972cc4ab-f051-49c8-9bf0-714b0c7c726b" />
 
@@ -50,6 +54,7 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 
 ### Execution & Validation
 1. Configured file server share/NTFS permissions so `Finance_Share_RW` controls the Finance share and `Legal_Share_RW` controls the Legal share.
+
 **Finance share mapped to Finance_Share_RW**
 <img width="332" height="210" alt="finanace-share-4" src="https://github.com/user-attachments/assets/6e534ba1-38c9-4636-b28b-28a57a9f0a18" />
 
@@ -58,6 +63,7 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 
 
 2. **Baseline:** Finance analyst **Akira Mori** is placed in the `Finance` OU and added to `Finance_Share_RW`. He successfully creates work in the Finance share.
+
 **Akira signs in as Finance user**
 <img width="571" height="129" alt="akira_fi_user_login-6" src="https://github.com/user-attachments/assets/c68f64b5-2ed9-489b-ae1e-c0dd524507b4" />
 
@@ -66,6 +72,7 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 
 
 3. **The Move:** Simulated a department transfer by moving Akira's account from the `Finance` OU to the `Legal` OU. Updated group memberships: Akira is removed from `Finance_Share_RW` and added to `Legal_Share_RW`.
+
 **Move Akira to Legal OU**
 <img width="319" height="330" alt="Akira-move-to-legal-8" src="https://github.com/user-attachments/assets/62908d89-ee1b-48f0-8720-f89f6d0fedf6" />
 
@@ -74,6 +81,7 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 
 
 4. **Validation:** Re-tested from Akira’s session. He can now access the Legal share, but is explicitly **denied** access to the Finance share.
+
 **Legal share accessible for Akira**
 <img width="697" height="303" alt="bo-access-to-legal-for-fi-users-7" src="https://github.com/user-attachments/assets/41d4324d-b575-42f1-bf92-185ad56342be" />
 
@@ -91,16 +99,19 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 
 ### Execution & Validation
 1. Assigned an Entra ID P2 license to the partner account to enable advanced Conditional Access and TAP.
+
 **Partner has Entra ID P2 license**
 <img width="717" height="258" alt="user-p2-l-1" src="https://github.com/user-attachments/assets/9ccb6c0f-3883-4d4a-939d-88f0e779b1df" />
 
 
 3. Created a **Block Non-US Sign-in** Conditional Access policy targeting the partner account, utilizing IP-based named locations.
+
 **Location-based Conditional Access policy**
 <img width="652" height="131" alt="location-based-CA-2" src="https://github.com/user-attachments/assets/df43e030-bdda-4ffb-bdce-f72b7e5a296b" />
 
 
 5. **The Block:** Connected the lab client to a Switzerland VPN. The sign-in succeeds at the credential layer but is immediately blocked by Conditional Access due to the geographic violation.
+
 **VPN connected outside US**
 <img width="989" height="409" alt="vpn-use-3" src="https://github.com/user-attachments/assets/641676ce-88d6-4fca-8bf2-9440eeedfd1d" />
 
@@ -109,12 +120,14 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 
 
 4. **The Recovery (TAP):** To simulate a "lost phone while traveling" emergency, issued a short-lived **Temporary Access Pass** to the partner. 
+
 **Create Temporary Access Pass**
 <img width="919" height="276" alt="creating-TAP" src="https://github.com/user-attachments/assets/2be677a3-958a-4f99-83ca-8485f1861cf0" />
 
 
 
 6. Used the TAP to securely bypass the block, reach the Entra `Security info` page, and register a new Microsoft Authenticator token. Once complete, the TAP was deleted and the strict Conditional Access policy resumed normal enforcement.
+
 **TAP sign-in to Security info**
 <img width="649" height="440" alt="tap-signi-in" src="https://github.com/user-attachments/assets/acb7fdba-e9e1-4d4b-beb4-ca58050ebab4" />
 
