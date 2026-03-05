@@ -10,7 +10,8 @@ The environment is built on hybrid identity infrastructure utilizing Active Dire
 * **Cloud Control Plane:** Microsoft Entra ID sync with P2 licensing enforcing Conditional Access and TAP.
 * **Testing:** Dedicated lab "partner" and "associate" accounts used to validate location-based policies, RBAC, and MFA recovery.
 
-![Architecture overview](./images/architecture-overview.png)
+![Architecture overview]<img width="808" height="377" alt="Screenshot 2026-03-05 171029" src="https://github.com/user-attachments/assets/3dd82b91-39fe-4fe4-9464-75bf5310a3e3" />
+
 
 
 ---
